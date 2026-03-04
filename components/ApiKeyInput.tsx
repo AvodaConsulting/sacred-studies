@@ -51,7 +51,7 @@ export const ApiKeyInput: React.FC<ApiKeyInputProps> = ({ onActivated }) => {
   };
 
   return (
-    <div className="min-h-screen bg-ivory flex flex-col items-center justify-center p-6">
+    <div className="min-h-screen bg-background-light flex flex-col items-center justify-center p-6">
       <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl border border-stone-200 overflow-hidden animate-fade-in">
         <div className="bg-sage-600 p-12 text-center">
           <div className="w-20 h-20 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-6 backdrop-blur-md border border-white/20">
@@ -75,7 +75,7 @@ export const ApiKeyInput: React.FC<ApiKeyInputProps> = ({ onActivated }) => {
               onChange={(e) => setInputKey(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="AIzaSy..."
-              className="w-full bg-stone-50 border border-stone-300 text-stone-900 text-sm rounded-xl focus:ring-sage-500 focus:border-sage-500 block p-4 outline-none font-mono transition-all focus:shadow-inner"
+              className="w-full bg-stone-50 border border-stone-300 text-stone-900 text-sm rounded-xl focus:ring-sage-600 focus:border-sage-600 block p-4 outline-none font-mono transition-all focus:shadow-inner"
             />
             {error && <p className="text-red-500 text-xs font-bold pl-1 animate-pulse">{error}</p>}
           </div>

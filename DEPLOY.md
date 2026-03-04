@@ -35,19 +35,7 @@ firebase init hosting
 -   **Set up automatic builds and deploys with GitHub**: Type `n` (No) for now, unless you want to set up CI/CD.
 -   **File `dist/index.html` already exists. Overwrite?**: Type `n` (No) if asked.
 
-### 3. Configure Environment Variables
-
-The application requires a Gemini API key. Since this is a client-side application, the key is bundled during the build process.
-
-Create a `.env` file in the root directory (if it doesn't exist) and add your API key:
-
-```env
-GEMINI_API_KEY=your_actual_api_key_here
-```
-
-**Important**: Do not commit this file to version control if your repository is public.
-
-### 4. Build the Application
+### 3. Build the Application
 
 Run the build command to generate the production-ready files in the `dist` folder:
 
@@ -55,9 +43,9 @@ Run the build command to generate the production-ready files in the `dist` folde
 npm run build
 ```
 
-This command uses Vite to compile your TypeScript and React code, injecting the environment variables defined in `.env`.
+This command uses Vite to compile your TypeScript and React code.
 
-### 5. Deploy to Firebase
+### 4. Deploy to Firebase
 
 Finally, deploy the contents of the `dist` folder to Firebase Hosting:
 
@@ -67,7 +55,16 @@ firebase deploy --only hosting
 
 After the command completes, you will see a `Hosting URL` in the terminal. Open that URL to view your deployed application.
 
+### 5. First Run
+
+When you open the deployed application for the first time, you will be greeted with a "BYOK Protocol Activation" screen.
+
+1.  Enter your **Google Gemini API Key**.
+2.  The app will verify the key by making a small test request.
+3.  Once verified, the key is stored securely in your browser's local storage for future use.
+4.  You can clear the key at any time by clicking the "Logout" icon in the top right corner.
+
 ## Troubleshooting
 
 -   **Blank Page**: If you see a blank page, check the browser console for errors. Ensure that `firebase.json` has the rewrite rule configured correctly (it should rewrite all routes to `/index.html`).
--   **API Key Issues**: If the AI features don't work, ensure that `GEMINI_API_KEY` was correctly set in your `.env` file before running `npm run build`. You can verify this by inspecting the network requests in the browser developer tools.
+-   **API Key Issues**: If you see "Authorization Error", your key may be invalid or expired. Click the Logout button to clear it and enter a new one.

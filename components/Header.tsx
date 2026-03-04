@@ -6,9 +6,10 @@ import { UI_TEXT } from '../constants';
 interface HeaderProps {
   language: Language;
   onToggleLanguage: () => void;
+  onLogout: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ language, onToggleLanguage }) => {
+export const Header: React.FC<HeaderProps> = ({ language, onToggleLanguage, onLogout }) => {
   const langKey = language === Language.English ? 'en' : 'zh';
   const t = UI_TEXT;
 
@@ -26,6 +27,13 @@ export const Header: React.FC<HeaderProps> = ({ language, onToggleLanguage }) =>
           <span className={language === Language.English ? "text-primary font-bold" : "text-stone-400"}>EN</span>
           <span className="mx-2 text-stone-200">|</span>
           <span className={language === Language.TraditionalChinese ? "text-primary font-bold" : "text-stone-400"}>繁中</span>
+        </button>
+        <button 
+          onClick={onLogout}
+          className="flex items-center justify-center h-10 w-10 rounded-full border border-stone-300 bg-white text-stone-500 hover:text-red-600 hover:border-red-200 hover:bg-red-50 transition-colors shadow-sm"
+          title="Clear API Key"
+        >
+          <span className="material-symbols-outlined text-xl">logout</span>
         </button>
       </div>
     </header>

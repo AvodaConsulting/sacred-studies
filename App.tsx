@@ -12,7 +12,7 @@ import { APPROACHES, TRADITIONS, UI_TEXT, KNOWLEDGE_LEVEL_LABELS, STUDY_TYPE_LAB
 import { generateStudyGuide } from './services/geminiService';
 
 const App: React.FC = () => {
-  const [apiKey, setApiKey] = useState<string>('');
+  const [apiKey, setApiKey] = useState<string>(() => localStorage.getItem('gemini_api_key') || '');
   const [step, setStep] = useState(1);
   const [language, setLanguage] = useState<Language>(Language.English);
   const [currentView, setCurrentView] = useState<ViewType>('new');
@@ -56,6 +56,13 @@ const App: React.FC = () => {
     localStorage.setItem('sacred_studies_library', JSON.stringify(library));
   }, [library]);
 
+  // Save API Key to local storage
+  useEffect(() => {
+    if (apiKey) {
+      localStorage.setItem('gemini_api_key', apiKey);
+    }
+  }, [apiKey]);
+
   useEffect(() => {
     setConfig(prev => ({ ...prev, language }));
   }, [language]);
@@ -64,6 +71,25 @@ const App: React.FC = () => {
     setConfig(prev => ({ ...prev, ...updates }));
     setIsDirty(true);
     setCurrentLibraryItem(null);
+  };
+
+  const handleLogout = () => {
+    setApiKey('');
+    localStorage.removeItem('gemini_api_key');
+    setStep(1);
+    setConfig({
+      passage: '',
+      topic: '',
+      knowledgeLevel: KnowledgeLevel.Intermediate,
+      studyType: StudyType.Comprehensive,
+      duration: 60,
+      approaches: [],
+      customApproach: '',
+      traditions: [],
+      language: Language.English,
+      autoResearch: true,
+      includeBackground: false
+    });
   };
 
   const handleBack = () => {
@@ -209,7 +235,11 @@ const App: React.FC = () => {
 
       {/* Main Content Area */}
       <main className="flex flex-1 flex-col overflow-y-auto bg-[#f8f7f4] relative">
-        <Header language={language} onToggleLanguage={() => setLanguage(l => l === Language.English ? Language.TraditionalChinese : Language.English)} />
+        <Header 
+          language={language} 
+          onToggleLanguage={() => setLanguage(l => l === Language.English ? Language.TraditionalChinese : Language.English)} 
+          onLogout={handleLogout}
+        />
         
         <div className="w-full max-w-4xl mx-auto px-6 pb-32">
           {currentView === 'new' ? (
